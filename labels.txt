@@ -12,32 +12,32 @@ hazardous
 
 >>> Defination
 
-0. plastic
+> plastic
 Any plastic item: bottles, bags, wrappers, containers, broken plastic parts.
 
-1. paper_cardboard
+> paper_cardboard
 Paper, newspapers, books, cartons, boxes, paper packaging.
 
-2. metal
+> metal
 Metal objects such as cans, foil, tins, scrap metal pieces.
 
-3. glass
+> glass
 Glass items including bottles, jars, broken glass fragments.
 
-4. organic_food
+> organic_food
 Food waste: leftovers, peels, vegetable waste, rotten food.
 
-5. textile
+> textile
 Cloth-based items: clothes, rags, fabric pieces, shoes.
 
-6. rubber
+> rubber
 Rubber materials: tires, footwear soles, rubber bands, hoses.
 
-7. wood
+> wood
 Wooden waste: sticks, planks, furniture parts, plywood.
 
-8. e_waste
+> e_waste
 Electronic waste: cables, chargers, circuit boards, devices.
 
-9. hazardous
+> hazardous
 Dangerous waste: batteries, syringes, chemicals, sharp objects.

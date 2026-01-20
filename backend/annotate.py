@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Dict
 from pydantic import BaseModel, Field, ValidationError
 from ollama import Client
+import json
 
 
 # ------------------------------------------------------------------
@@ -24,36 +25,33 @@ class GarbageScores(BaseModel):
     hazardous: float = Field(ge=0.0, le=1.0)
 
 class Annotator:
-    def __init__(self,ollama_host: str = "http://localhost:11434",model: str = "qwen3-vl",):
+    def __init__(self,ollama_host: str = "http://localhost:11434",model: str = "gemma3",):
         self.client = Client(host=ollama_host)
         self.model = model
 
     # ---------------- PRIVATE ----------------
 
     def _build_prompt(self) -> str:
-        return (
-        """
+        return """
             You are a waste classification system.
 
-            For the image, assign confidence scores (0.0–1.0) for EXACTLY these 10 categories:
+            Analyze the image and return a JSON object with EXACTLY these 10 keys.
+            Each value is a confidence score between 0.0 and 1.0.
+            return a float for each key.
+            
+            Rules:
+            - Scores must reflect actual presence in the image
+            - Use 0.0 if absent
+            - Higher score = more dominant material
+            - No explanations, no extra text, ONLY JSON
 
-            plastic, paper_cardboard, metal, glass, organic_food,
-            textile, rubber, wood, e_waste, hazardous
-
-            RULES:
-            - Output EXACTLY these 10 keys.
-            - Values must be floats between 0.0 and 1.0.
-            - Multi-label allowed.
-            - For categories NOT clearly visible, use EXACTLY 0.0.
-            - Do NOT hedge with small values (no 0.05, 0.1, etc).
-            - Most images contain at most 1–2 categories.
-            - At least 7 of the 10 values should usually be 0.0.
-            - If one category is dominant, all others must be 0.0.
-            - If no garbage is visible, set ALL values to 0.0.
-
-            Return ONLY valid JSON. No text.
+            Keys:
+            plastic, paper_cardboard, metal, glass,
+            organic_food, textile, rubber, wood,
+            e_waste, hazardous
+            
+            return a valid json 
         """
-    )
 
     async def _call_llm(self, image_path: str) -> str:
         """
@@ -66,7 +64,7 @@ class Annotator:
                 format=GarbageScores.model_json_schema(),
                 messages=[
                     {
-                        "role": "user",
+                        "role": "agent",
                         "content": self._build_prompt(),
                         "images": [image_path],
                     }
@@ -95,11 +93,12 @@ class Annotator:
         return self._validate(raw_json)
 
 
-
 if __name__ == "__main__":
     async def demo():
         annotator = Annotator()
-        result = await annotator.annotate_image("/home/vector/dataset/master_dataset/raw/TrashNet/dataset-resized/trash/trash134.jpg")
-        print(result)
+        result = await annotator.annotate_image(
+            "/home/vector/dataset/master_dataset/raw/TrashNet/dataset-resized/trash/trash26.jpg"
+        )
+        print(json.dumps(result, indent=4, sort_keys=True))
 
     asyncio.run(demo())
