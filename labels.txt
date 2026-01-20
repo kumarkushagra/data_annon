@@ -1,0 +1,43 @@
+plastic
+paper_cardboard
+metal
+glass
+organic_food
+textile
+rubber
+wood
+e_waste
+hazardous
+
+
+>>> Defination
+
+0. plastic
+Any plastic item: bottles, bags, wrappers, containers, broken plastic parts.
+
+1. paper_cardboard
+Paper, newspapers, books, cartons, boxes, paper packaging.
+
+2. metal
+Metal objects such as cans, foil, tins, scrap metal pieces.
+
+3. glass
+Glass items including bottles, jars, broken glass fragments.
+
+4. organic_food
+Food waste: leftovers, peels, vegetable waste, rotten food.
+
+5. textile
+Cloth-based items: clothes, rags, fabric pieces, shoes.
+
+6. rubber
+Rubber materials: tires, footwear soles, rubber bands, hoses.
+
+7. wood
+Wooden waste: sticks, planks, furniture parts, plywood.
+
+8. e_waste
+Electronic waste: cables, chargers, circuit boards, devices.
+
+9. hazardous
+Dangerous waste: batteries, syringes, chemicals, sharp objects.
